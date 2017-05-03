@@ -1,0 +1,342 @@
+/* inspired by http://yihui.name/cn/ */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 600px;
+    margin: 2em auto;
+    padding: 0 2em;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+}
+
+p {
+    line-height: 24px;
+    margin: 1em 0;
+}
+
+header {
+    padding: .5em 0;
+    border-bottom: 1px solid #cccccc;
+}
+
+nav {
+    float: left;
+    font-family: "Microsoft YaHei";
+    font-size: 1.1em;
+    text-transform: uppercase;
+    margin-left: -12em;
+    width: 9em;
+    text-align: right;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    padding: .7em 1em;
+    color: #000000;
+}
+
+nav a:hover {
+    background-color: #ff0000;
+    color: #f9f9f9;
+    -webkit-transition: color .2s linear;
+}
+
+article {
+    font-size: 16px;
+    padding-top: .5em;
+}
+
+article a {
+    color: #dd0000;
+    text-decoration: none;
+}
+
+article a:hover {
+    color: #333333;
+    text-decoration: underline;
+}
+
+.info {
+    font-size: 14px;
+}
+
+html {
+    font-size: 100%;
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    color: #444;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 13px;
+    line-height: 1.5em;
+    padding: 1em;
+    margin: auto;
+    max-width: 42em;
+    background: #fefefe;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+}
+
+h2 {
+    border-bottom: 2px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
+}
+
+h3 {
+    border-bottom: 2px solid #CCCCCC;
+    font-size: 18px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+li,
+table,
+pre {
+    margin: 15px 0;
+}
+
+p {
+    margin: 1em 0;
+}
+
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    overflow: auto;
+    padding: 5px;
+}
+
+pre code {
+    background-color: #F8F8F8;
+    border: none;
+    padding: 0;
+}
+
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 0 0.2em;
+    line-height: 1;
+}
+
+pre>code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #0b0080;
+}
+
+a:hover {
+    color: #06e;
+}
+
+a:active {
+    color: #faa700;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+a:hover,
+a:active {
+    outline: 0;
+}
+
+::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000
+}
+
+::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #000
+}
+
+a::-moz-selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad
+}
+
+a::selection {
+    background: rgba(255, 255, 0, 0.3);
+    color: #0645ad
+}
+
+blockquote {
+    color: #666666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #EEE solid;
+}
+
+ul,
+ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+}
+
+li p:last-child {
+    margin: 0
+}
+
+dd {
+    margin: 0 0 0 2em;
+}
+
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    vertical-align: top;
+}
+
+@media only screen and (min-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+.edit {
+    margin: 3px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background-color: #f3f3f3;
+    color: #333;
+    font-size: 13px;
+}
+
+.edit:hover {
+    text-decoration: none;
+    background-color: #f00;
+    color: #fff;
+    -webkit-transition: color .2s linear;
+}
+
+.prepage a {
+    float: left;
+    text-decoration: none;
+    padding: .5em 1em;
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.nextpage a {
+    float: right;
+    text-decoration: none;
+    padding: .5em 1em;
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.prepage a:hover,
+.nextpage a:hover {
+    text-decoration: none;
+    background-color: #ff0000;
+    color: #f9f9f9;
+    -webkit-transition: color .2s linear;
+}
+
+.archive {
+    list-style: none;
+    line-height: 28px;
+}
+
+.archive h3 {
+    margin: 0.5em 0;
+}
+
+.archive time {
+    float: left;
+    font-size: 14px;
+    color: #999999;
+    margin-right: 1.2em;
+}
+
+.tag {
+    background-color: #ff0000;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ffffff;
+    display: inline-block;
+    padding: 0 5px;
+    margin-bottom: 8px;
+}
+
+.tag:hover {
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #000000;
+    -webkit-transition: color .2s linear;
+}

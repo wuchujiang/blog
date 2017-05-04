@@ -1,4 +1,5 @@
 var mongodb = require('./db');
+var ObjectID = require('mongodb').ObjectID;
 var markdown = require('markdown').markdown;
 
 function Post(name, title, tags, post) {
@@ -94,7 +95,7 @@ Post.getTen = function(name, page, callback) {
     })
 }
 
-Post.getOne = function(name, day, title, callback) {
+Post.getOne = function(_id, callback) {
     mongodb.open(function(err, db) {
         if (err) {
             return callback(err);
@@ -106,27 +107,21 @@ Post.getOne = function(name, day, title, callback) {
                 return callback(err);
             }
             collection.findOne({
-                name: name,
-                "time.day": day,
-                title: title
+                '_id': new ObjectID(_id)
             }, function(err, doc) {
-                
                 if (err || doc == null) {
                     mongodb.close();
                     return callback(err);
                 }
-
                 if (doc) {
                     collection.update({
-                        "name": name,
-                        "time.day": day,
-                        "title": title
+                        '_id': new ObjectID
                     }, {
-                        $inc: {"pv": 1}
+                        $inc: { "pv": 1 }
                     }, function() {
                         mongodb.close();
                         if (err) {
-                          return callback(err);
+                            return callback(err);
                         }
                     });
                     doc.post = markdown.toHTML(doc.post);
@@ -140,7 +135,7 @@ Post.getOne = function(name, day, title, callback) {
     })
 }
 
-Post.edit = function(name, day, title, callback) {
+Post.edit = function(_id, callback) {
     mongodb.open(function(err, db) {
         if (err) {
             return callback(err);
@@ -152,11 +147,8 @@ Post.edit = function(name, day, title, callback) {
             }
 
             collection.findOne({
-                name: name,
-                "time.day": day,
-                title: title
+                '_id': new ObjectID(_id)
             }, function(err, doc) {
-                console.log(44);
                 mongodb.close();
                 if (err) {
                     return callback(err);
@@ -168,7 +160,7 @@ Post.edit = function(name, day, title, callback) {
     })
 }
 
-Post.update = function(name, day, title, post, callback) {
+Post.update = function(_id, post, callback) {
     mongodb.open(function(err, db) {
         if (err) {
             return callback(err);
@@ -179,11 +171,9 @@ Post.update = function(name, day, title, post, callback) {
                 mongodb.close();
                 return callback(err);
             }
-
+            console.log(_id);
             collection.update({
-                name: name,
-                "time.day": day,
-                title: title
+                "_id": new ObjectID(_id)
             }, {
                 $set: { post: post }
             }, function(err) {
@@ -277,5 +267,35 @@ Post.getTag = function(tag, callback) {
         });
     });
 };
+
+Post.search = function(keyword, callback) {
+    mongodb.open(function(err, db) {
+        if (err) {
+            return callback(err);
+        }
+        db.collection('posts', function(err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            var partten = new RegExp(keyword, 'i');
+            collection.find({
+                'title': partten
+            }, {
+                name: -1,
+                time: 1,
+                title: 1
+            }).sort({
+                time: -1
+            }).toArray(function(err, docs) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, docs);
+            })
+        })
+    })
+}
 
 module.exports = Post;

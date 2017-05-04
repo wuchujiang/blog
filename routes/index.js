@@ -77,7 +77,6 @@ router.post('/reg', function(req, res, next) {
             return res.redirect('/');
         }
 
-        //
         if (user) {
             req.flash('error', '用户已存在');
             return res.redirect('/reg');
@@ -89,7 +88,6 @@ router.post('/reg', function(req, res, next) {
                 req.flash('error', err);
                 return res.redirect('/reg'); //注册失败返回主册页
             }
-            console.log(user);
             req.session.user = user; //用户信息存入 session
             req.flash('success', '注册成功!');
             res.redirect('/'); //注册成功后返回主页
@@ -169,6 +167,22 @@ router.get('/upload', checkNotLogin, function(req, res, next) {
     });
 });
 
+router.get('/search', function(req, res, next) {
+    Post.search(req.query.keyword, function(err, posts) {
+        if (err || posts == null) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        res.render('search', {
+            title: "SEARCH:" + req.query.keyword,
+            posts: posts,
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+        });
+    });
+});
+
 router.get('/u/:name', function(req, res, next) {
     var page = req.query.p ? parseInt(req.query.p) : 1;
     User.get(req.params.name, function(err, user) {
@@ -196,8 +210,8 @@ router.get('/u/:name', function(req, res, next) {
     })
 });
 
-router.get('/u/:name/:day/:title', function(req, res, next) {
-    Post.getOne(req.params.name, req.params.day, req.params.title, function(err, post) {
+router.get('/p/:_id', function(req, res, next) {
+    Post.getOne(req.params._id, function(err, post) {
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
@@ -213,7 +227,7 @@ router.get('/u/:name/:day/:title', function(req, res, next) {
 
 });
 
-router.post('/u/:name/:day/:title', function(req, res, next) {
+router.post('/p/:_id', function(req, res, next) {
     var date = new Date();
     var time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
         date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
@@ -225,7 +239,7 @@ router.post('/u/:name/:day/:title', function(req, res, next) {
         content: req.body.content
     };
 
-    var newContent = new Comment(req.params.name, req.params.day, req.params.title, comment);
+    var newContent = new Comment(req.params._id, comment);
     newContent.save(function(err) {
         if (err) {
             req.flash('error', err);
@@ -236,9 +250,9 @@ router.post('/u/:name/:day/:title', function(req, res, next) {
     });
 });
 
-router.get('/edit/:name/:day/:title', checkNotLogin, function(req, res, next) {
+router.get('/edit/:_id', checkNotLogin, function(req, res, next) {
     var currentUser = req.session.user;
-    Post.edit(currentUser.name, req.params.day, req.params.title, function(err, post) {
+    Post.edit(req.params._id, function(err, post) {
         if (err) {
             req.flash('error', err);
             return res.redirect('back');
@@ -255,10 +269,10 @@ router.get('/edit/:name/:day/:title', checkNotLogin, function(req, res, next) {
 
 });
 
-router.post('/edit/:name/:day/:title', checkNotLogin, function(req, res, next) {
+router.post('/edit/:_id', checkNotLogin, function(req, res, next) {
     var currentUser = req.session.user;
-    Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, function(err) {
-        var url = encodeURI('/u/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
+    Post.update(req.params._id, req.body.post, function(err) {
+        var url = encodeURI('/p/' + req.params._id);
         if (err) {
             req.flash('error', err);
             return res.redirect(url); //出错！返回文章页
